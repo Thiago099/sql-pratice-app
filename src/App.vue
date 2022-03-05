@@ -18,7 +18,7 @@
         </select>
       </div>
       <div class="form-group col-3" v-for="(parameter, name) in verb_parameters[form.verb]" :key="parameter">
-        <label for="verb">{{ name }}:</label>
+        <label for="verb">{{ capitlizeFirst(name) }}:</label>
         <select name="" id="verb" class="form-select" v-model="form.parameters[name]">
           <option v-for="({id_entity}) in parameter" :key="id_entity" :value="id_entity">
             {{ entity[id_entity] }}
@@ -74,6 +74,12 @@ export default {
     this.verb_parameters = data.verb_parameters
     await get_data('verb_entities',this)
   },
+  methods:{
+    capitlizeFirst(str) {
+      if (!str) return;
+      return str.match("^[a-z]") ? str.charAt(0).toUpperCase() + str.substring(1) : str;
+    },
+  }
 }
 </script>
 
