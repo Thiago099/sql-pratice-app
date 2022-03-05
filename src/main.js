@@ -1,4 +1,10 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-createApp(App).mount('#app')
+import App from './App.vue'
+const app = createApp(App)
+
+import http from './global/http.js'
+app.mixin(http);
+
+app.mount('#app')
