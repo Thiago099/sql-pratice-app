@@ -9,7 +9,7 @@
                     </div>
                     
                     <div class="form-group" v-for="generalization in ent.generalization" :key="generalization.id">
-                            <label style="color:#0c0">Generalization:</label>
+                            <label class="green">Generalization:</label>
                             <select class="form-select" v-model="generalization.id_parent">
                             <option 
                                 v-for="ent in entity" :key="ent.id" :value="ent.id"
@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="form-group" v-for="verb_entities in ent.verb_entities" :key="verb_entities.id">
-                            <label style="color:blue">Verb:</label>
+                            <label class="cyan">Verb:</label>
                             <select class="form-select" v-model="verb_entities.id_verb">
                             <option 
                                 v-for="veb in verb" :key="veb.id" :value="veb.id"
@@ -46,6 +46,12 @@ export default {
 }
 label{
     margin-top: 10px;    
+}
+.green{
+    color: #0f0;
+}
+.cyan{
+    color: #ff0;
 }
 
 

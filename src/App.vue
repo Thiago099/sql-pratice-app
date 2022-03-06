@@ -4,10 +4,12 @@
             <router-link :to="route.path" class="nav-link">{{ route.name }}</router-link>
         </div>
   <router-view style="margin-bottom:50px" />
+  
     </div>
+    
 </template>
 <script>
-import router from './router'
+import router from './global/router'
 export default {
     name: 'App',
     data(){
@@ -29,9 +31,10 @@ export default {
     border:1px solid #ddd;
     border-radius: 5px;
     margin-left: 5px;
+    color:white;
 }
 .router-link-exact-active{
-    color:red;
-    border-bottom: 2px solid rgb(255, 0, 0);
+    color:cyan;
+    border-bottom: 2px solid cyan;
 }
 </style>
