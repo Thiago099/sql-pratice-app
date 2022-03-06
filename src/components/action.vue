@@ -11,7 +11,7 @@
             </select>
           </div>
           <div class="form-group col-3">
-            <label for="verb">Verb:</label>
+            <label for="verb" class="yellow">Verb:</label>
             <select name="" id="verb" class="form-select" v-model="form.verb">
               <option v-for="({id_verb}) in verb_entities.filter(item=>item.id_entity == form.entity)" :key="id_verb" :value="id_verb" @change="form.parameters={}">
                 {{ verb[id_verb].name }}
@@ -19,7 +19,7 @@
             </select>
           </div>
           <div class="form-group col-3" v-for="(parameter, name) in verb_parameters[form.verb]" :key="parameter">
-            <label for="verb">{{ capitlizeFirst(name) }}:</label>
+            <label for="verb" class="magenta">{{ capitlizeFirst(name) }}:</label>
             <select name="" id="verb" class="form-select" v-model="form.parameters[name]">
               <option v-for="({id_entity}) in parameter" :key="id_entity" :value="id_entity">
                 {{ entity[id_entity].name }}

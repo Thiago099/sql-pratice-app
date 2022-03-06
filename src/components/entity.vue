@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="form-group" v-for="verb_entities in ent.verb_entities" :key="verb_entities">
-                            <label class="cyan">Verb:</label>
+                            <label class="yellow">Verb:</label>
                             <select class="form-select" v-model="verb_entities.id_verb">
                             <option 
                                 v-for="veb in verb" :key="veb.id" :value="veb.id"
