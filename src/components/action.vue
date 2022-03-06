@@ -43,18 +43,7 @@ export default {
 </script>
 
 <style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-td, th {
-  border: 1px solid #dddddd;
-  text-align: center;
-  padding: 8px;
-}	
-.form-group {
-  margin-top: 10px;
-}
+
 label{
   margin-bottom: 10px;
 }
