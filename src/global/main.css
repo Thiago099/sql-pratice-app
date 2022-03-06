@@ -19,8 +19,7 @@ body{
     border-color: rgb(85, 85, 85);
     border-radius: 10px;
 }
-
-/* dark scrollbar */
 :root {
     color-scheme: dark;
-  }
+}
+

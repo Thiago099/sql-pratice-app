@@ -21,20 +21,21 @@ export default {
 </script>
 
 <style scoped>
-
 .tabs{
     display: inline-block;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.nav-link{
-    border:1px solid #ddd;
+.nav-link{  
+    border:1px solid rgb(85, 85, 85);
     border-radius: 5px;
     margin-left: 5px;
     color:white;
+    background-color: rgb(36, 36, 36);
 }
 .router-link-exact-active{
     color:cyan;
     border-bottom: 2px solid cyan;
 }
+
 </style>
