@@ -23,6 +23,7 @@ export default {
 .tabs{
     display: inline-block;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 .nav-link{
     border:1px solid #ddd;

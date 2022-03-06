@@ -10,4 +10,7 @@ app.mixin(http);
 import router from './router'
 app.use(router)
 
+import global from './global.js'
+app.mixin(global)
+
 app.mount('#app')
