@@ -19,11 +19,18 @@ export default {
 </script>
 
 <style scoped>
-.router-link-exact-active{
-    color:red;
-}
+
 .tabs{
     display: inline-block;
     margin-top: 10px;
+}
+.nav-link{
+    border:1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.router-link-exact-active{
+    color:red;
+    border-bottom: 2px solid rgb(255, 0, 0);
 }
 </style>
