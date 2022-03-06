@@ -8,7 +8,7 @@
                         <input class="form-control" v-model="ent.name" :id="id"/>
                     </div>
                     
-                    <div class="form-group" v-for="generalization in ent.generalization" :key="generalization.id">
+                    <div class="form-group" v-for="generalization in ent.generalization" :key="generalization">
                             <label class="green">Generalization:</label>
                             <select class="form-select" v-model="generalization.id_parent">
                             <option 
@@ -19,7 +19,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group" v-for="verb_entities in ent.verb_entities" :key="verb_entities.id">
+                    <div class="form-group" v-for="verb_entities in ent.verb_entities" :key="verb_entities">
                             <label class="cyan">Verb:</label>
                             <select class="form-select" v-model="verb_entities.id_verb">
                             <option 
@@ -41,18 +41,7 @@ export default {
 </script>
 
 <style scoped>
-.card {
-    margin-top: 10px;
-}
-label{
-    margin-top: 10px;    
-}
-.green{
-    color: #0f0;
-}
-.cyan{
-    color: #ff0;
-}
+
 
 
 </style>

@@ -1,3 +1,4 @@
+/* DARK THEME */
 body{
     background-color: rgb(24, 24, 24);
     color:white;
@@ -24,3 +25,19 @@ body{
     color-scheme: dark;
 }
 
+/* CARD */
+.card {
+    margin-top: 10px;
+}
+label{
+    margin-top: 10px;    
+}
+.green{
+    color: #0f0;
+}
+.cyan{
+    color: #ff0;
+}
+.magenta{
+    color: #f0f;
+}
