@@ -7,4 +7,7 @@ const app = createApp(App)
 import http from './global/http.js'
 app.mixin(http);
 
+import router from './router'
+app.use(router)
+
 app.mount('#app')
