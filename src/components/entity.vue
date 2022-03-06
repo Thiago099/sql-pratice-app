@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-6"  v-for="ent in entity" :key="ent">
+        <div class="col-md-3 col-sm-6"  v-for="ent in entity" :key="ent">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">

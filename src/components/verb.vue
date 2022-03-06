@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-6"  v-for="veb in verb" :key="veb">
+        <div class="col-md-3 col-sm-6"  v-for="veb in verb" :key="veb">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">
