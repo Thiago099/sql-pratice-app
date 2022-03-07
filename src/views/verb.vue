@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-6 col-sm-12"  v-for="veb in verb" :key="veb">
+        <div class="col-md-6 col-sm-12"  v-for="(veb, index) in filterObject(verb, item=>item.delete != true)" :key="veb">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">
@@ -22,12 +22,14 @@
                 <button 
                     class="btn btn-danger" 
                     type="button"
+                    @click="del(index)"
                 >
                     <i class="fa fa-trash"/>
                 </button>
                 <button 
                     class="btn btn-success" 
                     type="button"
+                    @click="add()"
                 >
                     <i class="fa fa-plus"/>
                 </button>
@@ -49,7 +51,35 @@ export default {
     methods:{
         save(){
             for(const cur in this.verb){
-                this.axios('/verb','post',{data:this.verb[cur]})
+                if(this.verb[cur].delete == true){
+                    this.axios('/verb/'+this.verb[cur].id,'delete')
+                }else{
+                    this.axios('/verb','post',{data:this.verb[cur]})
+                }
+            }
+        },
+        del(index){
+            if(this.verb[index].id == undefined)
+            {
+                delete this.verb[index];
+            }
+            else
+            {
+                this.verb[index].delete = true;
+            }
+        },  
+        add(){
+            let max_index = 0
+            for(const i in this.verb)
+            {
+                if(i > max_index)
+                {
+                    max_index = i
+                }
+            }
+            this.verb[max_index+1] = {
+                name: '',
+                verb_parameters: [],
             }
         }
     },

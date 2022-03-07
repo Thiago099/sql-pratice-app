@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-3 col-sm-6"  v-for="ent in entity" :key="ent">
+        <div class="col-md-3 col-sm-6"  v-for="(ent, index) in filterObject(entity, item=>item.delete != true)" :key="ent">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">
@@ -26,6 +26,22 @@
                     >
                     </multi-select>
                 </div>
+                <div class="card-footer">
+                <button 
+                    class="btn btn-danger" 
+                    type="button"
+                    @click="del(index)"
+                >
+                    <i class="fa fa-trash"/>
+                </button>
+                <button 
+                    class="btn btn-success" 
+                    type="button"
+                    @click="add()"
+                >
+                    <i class="fa fa-plus"/>
+                </button>
+                </div>
             </div>
         </div>
         <div>
@@ -46,9 +62,38 @@ export default {
     methods:{
         save(){
             for(const cur in this.entity){
-                this.axios('/entity','post',{data:this.entity[cur]})
+                if(this.entity[cur].delete == true){
+                    this.axios('/entity/'+this.entity[cur].id,'delete')
+                }else{
+                    this.axios('/entity','post',{data:this.entity[cur]})
+                }
             }
-        }
+        },
+        del(index){
+            if(this.entity[index].id == undefined)
+            {
+                delete this.entity[index];
+            }
+            else
+            {
+                this.entity[index].delete = true;
+            }
+        },  
+        add(){
+            let max_index = 0
+            for(const i in this.entity)
+            {
+                if(i > max_index)
+                {
+                    max_index = i
+                }
+            }
+            this.entity[max_index+1] = {
+                name: '',
+                generalization: [],
+                verb_entities: [],
+            }
+        },
     }
 }
 </script>

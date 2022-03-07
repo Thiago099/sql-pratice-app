@@ -45,5 +45,9 @@ export default{
             if (!str) return;
             return str.match("^[a-z]") ? str.charAt(0).toUpperCase() + str.substring(1) : str;
         },
+        filterObject(obj, callback) {
+        return Object.fromEntries(Object.entries(obj).
+            filter(([key, val]) => callback(val, key)));
+        }
     }
 }
