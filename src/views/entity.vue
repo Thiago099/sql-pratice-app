@@ -28,19 +28,21 @@
                 </div>
                 <div class="card-footer">
                 <button 
+                    class="btn btn-success" 
+                    type="button"
+                    @click="add()"
+                    v-if="index == maxIndex"
+                >
+                    <i class="fa fa-plus"/>
+                </button>
+                <button 
                     class="btn btn-danger" 
                     type="button"
                     @click="del(index)"
                 >
                     <i class="fa fa-trash"/>
                 </button>
-                <button 
-                    class="btn btn-success" 
-                    type="button"
-                    @click="add()"
-                >
-                    <i class="fa fa-plus"/>
-                </button>
+                
                 </div>
             </div>
         </div>
@@ -80,20 +82,26 @@ export default {
             }
         },  
         add(){
-            let max_index = 0
-            for(const i in this.entity)
-            {
-                if(i > max_index)
-                {
-                    max_index = i
-                }
-            }
-            this.entity[max_index+1] = {
+            
+            this.entity[this.maxIndex+1] = {
                 name: '',
                 generalization: [],
                 verb_entities: [],
             }
         },
+    },
+    computed:{
+        maxIndex(){
+            let max_index = 0
+            for(const i in this.entity)
+            {
+                if(this.entity[i].id > max_index)
+                {
+                    max_index = this.entity[i].id
+                }
+            }
+            return max_index
+        }
     }
 }
 </script>

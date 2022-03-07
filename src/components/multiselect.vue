@@ -1,6 +1,6 @@
 <template>
     <div v-if="data != undefined">
-        <div class="form-group" v-for="(veb_parameters, index) in data.filter(item=>item.delete != true)" :key="veb_parameters">
+        <div class="form-group" v-for="(veb_parameters, index) in filteredData" :key="veb_parameters">
             <label :class="color">{{ label }}:</label>
             <div class="input-group">
                 <input type="text" class="form-control" v-if="show_text" v-model="veb_parameters.name">
@@ -12,19 +12,21 @@
                     </option>
                 </select>
                 <button 
-                    class="btn btn-success" 
-                    type="button"
-                    @click="addParameter(veb_parameters, index)"
-                >
-                    <i class="fa fa-plus"/>
-                </button>
-                <button 
                     class="btn btn-danger" 
                     type="button"
                     @click="removeParameter(veb_parameters, index)"
                 >
                     <i class="fa fa-trash"/>
                 </button>
+                <button 
+                    class="btn btn-success" 
+                    type="button"
+                    @click="addParameter(veb_parameters, index)"
+                    v-if="index == filteredData.length - 1"
+                >
+                    <i class="fa fa-plus"/>
+                </button>
+                
             </div>
         </div>
         
@@ -103,6 +105,11 @@ export default {
             }
             this.$emit('data', this.form_data)
         },
+    },
+    computed:{
+        filteredData(){
+            return this.data.filter(item=>item.delete != true)
+        }
     }
 }
 </script>

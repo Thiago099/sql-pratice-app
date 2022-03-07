@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-6 col-sm-12"  v-for="(veb, index) in filterObject(verb, item=>item.delete != true)" :key="veb">
+        <div class="col-md-6 col-sm-12"  v-for="(veb, index) in this.filterObject(this.verb, item=>item.delete != true)" :key="veb">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">
@@ -20,19 +20,21 @@
                 </div>
                 <div class="card-footer">
                 <button 
+                    class="btn btn-success" 
+                    type="button"
+                    @click="add()"
+                    v-if="index == maxIndex"
+                >
+                    <i class="fa fa-plus"/>
+                </button>
+                <button 
                     class="btn btn-danger" 
                     type="button"
                     @click="del(index)"
                 >
                     <i class="fa fa-trash"/>
                 </button>
-                <button 
-                    class="btn btn-success" 
-                    type="button"
-                    @click="add()"
-                >
-                    <i class="fa fa-plus"/>
-                </button>
+                
                 </div>
             </div>
         </div>
@@ -69,15 +71,8 @@ export default {
             }
         },  
         add(){
-            let max_index = 0
-            for(const i in this.verb)
-            {
-                if(i > max_index)
-                {
-                    max_index = i
-                }
-            }
-            this.verb[max_index+1] = {
+            
+            this.verb[this.maxIndex+1] = {
                 name: '',
                 verb_parameters: [],
             }
@@ -86,6 +81,17 @@ export default {
     created(){
       this.update()
     },
+    computed:{
+        maxIndex(){
+            let max_index = 0
+            for(const cur in this.verb){
+                if(this.verb[cur].id > max_index){
+                    max_index = this.verb[cur].id
+                }
+            }
+            return max_index
+        }
+    }
 }
 </script>
 
