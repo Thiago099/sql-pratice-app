@@ -11,19 +11,19 @@
                     {{ ent.name }}
                     </option>
                 </select>
-                    <button 
-                    class="btn btn-danger" 
-                    type="button"
-                    @click="removeParameter(veb_parameters, index)"
-                >
-                    <i class="fa fa-trash"/>
-                </button>
                 <button 
                     class="btn btn-success" 
                     type="button"
                     @click="addParameter(veb_parameters, index)"
                 >
                     <i class="fa fa-plus"/>
+                </button>
+                <button 
+                    class="btn btn-danger" 
+                    type="button"
+                    @click="removeParameter(veb_parameters, index)"
+                >
+                    <i class="fa fa-trash"/>
                 </button>
             </div>
         </div>

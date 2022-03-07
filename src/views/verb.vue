@@ -18,6 +18,20 @@
                     >
                     </multi-select>
                 </div>
+                <div class="card-footer">
+                <button 
+                    class="btn btn-danger" 
+                    type="button"
+                >
+                    <i class="fa fa-trash"/>
+                </button>
+                <button 
+                    class="btn btn-success" 
+                    type="button"
+                >
+                    <i class="fa fa-plus"/>
+                </button>
+                </div>
             </div>
         </div>
         <div>
