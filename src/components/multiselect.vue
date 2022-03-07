@@ -1,7 +1,7 @@
 <template>
     <div v-if="data != undefined">
+        <label :class="color">{{ label }}:</label>
         <div class="form-group" v-for="(veb_parameters, index) in filteredData" :key="veb_parameters">
-            <label :class="color">{{ label }}:</label>
             <div class="input-group">
                 <input type="text" class="form-control" v-if="show_text" v-model="veb_parameters.name">
                 <select class="form-select" v-model="veb_parameters[field]">
@@ -31,7 +31,6 @@
         </div>
         
         <div v-if="data.filter(item=>item.delete != 1).length == 0" style="width:100%">
-            <label style="float:right;margin-left:10px; width:100%" :class="color">{{ label }}:</label>
             <button 
             style=""
                 class="btn btn-success" 
