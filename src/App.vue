@@ -4,7 +4,6 @@
             <router-link :to="route.path" class="nav-link">{{ route.name }}</router-link>
         </div>
   <router-view style="margin-bottom:50px" />
-  
     </div>
     
 </template>
@@ -16,7 +15,8 @@ export default {
         return{
             routes:router.options.routes
         }
-    }
+    },
+   
 }
 </script>
 

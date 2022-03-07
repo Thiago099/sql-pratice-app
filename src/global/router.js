@@ -3,17 +3,17 @@ const routes = [
   {
     path: '/',
     name: 'Action',
-    component:  import('../components/action.vue')
+    component:  import('../views/action.vue')
   },
   {
     path: '/entity',
     name: 'Entity',
-    component: () => import(/* webpackChunkName: "entity" */ '../components/entity.vue')
+    component: () => import(/* webpackChunkName: "entity" */ '../views/entity.vue')
   },
   {
     path: '/verb',
     name: 'Verb',
-    component: () => import(/* webpackChunkName: "entity" */ '../components/verb.vue')
+    component: () => import(/* webpackChunkName: "entity" */ '../views/verb.vue')
   }
 ]
 const router = createRouter({

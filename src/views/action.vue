@@ -3,7 +3,7 @@
       <div class="card-body">
         <div class="row">
           <div class="form-group col-3">
-            <label for="entity">Entity:</label>
+            <label for="entity" class="cyan">Entity:</label>
             <select name="" id="entity" class="form-select" v-model="form.entity" @change="form.verb=null;form.parameters={}">
               <option v-for="(e,id) in entity" :key="e" :value="id">
                 {{ e.name }}
@@ -42,7 +42,10 @@ export default {
           parameters:{}
         }
     }
-  }
+  },
+  created(){
+      this.update()
+  },
 }
 </script>
 
