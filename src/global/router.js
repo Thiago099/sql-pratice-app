@@ -14,6 +14,11 @@ const routes = [
     path: '/verb',
     name: 'Verb',
     component: () => import(/* webpackChunkName: "entity" */ '../views/verb.vue')
+  },
+  {
+    path: '/group',
+    name: 'group',
+    component: () => import(/* webpackChunkName: "entity" */ '../views/group.vue')
   }
 ]
 const router = createRouter({

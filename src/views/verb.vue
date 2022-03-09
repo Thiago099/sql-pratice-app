@@ -2,7 +2,7 @@
     <div class="row">
         <div v-for="(verb_g, vex) in grouped_verbs" :key="verb_g" class="row">
         <h2>{{ capitlizeFirst(group[vex].name) }}:</h2>
-        <div class="col-md-6 col-sm-12"  v-for="(veb, index) in verb_g.filter(item=>item.delete != true)" :key="veb">
+        <div class="col-lg-6 col-md-12"  v-for="(veb, index) in verb_g.filter(item=>item.delete != true)" :key="veb">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">

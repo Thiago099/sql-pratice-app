@@ -8,6 +8,7 @@ export default{
             group:{},
             verb_parameters:[],
             verb_entities:[],
+            groups:[],
         }
         },
     methods:{
@@ -54,6 +55,7 @@ export default{
                     this.grouped_verbs[i] = []
                 }
             }
+            this.groups = data.group
             await get_data('verb_parameters',data)
             data.verb_parameters = this.groupBy(data.verb_parameters, item => item.id_verb)
             for(const verb in data.verb_parameters){
