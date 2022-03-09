@@ -1,6 +1,8 @@
 <template>
     <div class="row">
-        <div class="col-md-6 col-sm-12"  v-for="(veb, index) in filteredVerbs" :key="veb">
+        <div v-for="(verb_g, vex) in grouped_verbs" :key="verb_g" class="row">
+        <h2>{{ capitlizeFirst(group[vex].name) }}:</h2>
+        <div class="col-md-6 col-sm-12"  v-for="(veb, index) in verb_g.filter(item=>item.delete != true)" :key="veb">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">
@@ -22,15 +24,15 @@
                 <button 
                     class="btn btn-success" 
                     type="button"
-                    @click="add()"
-                    v-if="index == maxIndex"
+                    @click="add(verb_g, vex)"
+                    v-if="index == verb_g.filter(item=>item.delete != true).length-1"
                 >
                     <i class="fa fa-plus"/>
                 </button>
                 <button 
                     class="btn btn-danger" 
                     type="button"
-                    @click="del(index)"
+                    @click="del(verb_g, veb)"
                 >
                     <i class="fa fa-trash"/>
                 </button>
@@ -42,11 +44,12 @@
             <button 
                 class="btn btn-success" 
                 type="button"
-                @click="add()"
-                v-if="Object.keys(filteredVerbs).length == 0"
+                @click="add(verb_g,vex)"
+                v-if="verb_g.filter(item=>item.delete != true).length == 0"
             >
                 <i class="fa fa-plus"/>
             </button>
+        </div>
         </div>
         <div>
             <a class="btn btn-info" style="float:right;margin-bottom:10px" @click="save">Save</a>
@@ -62,30 +65,34 @@ export default {
     },
     methods:{
         save(){
-            for(const cur in this.verb){
-                if(this.verb[cur].delete == true){
-                    this.axios('/verb/'+this.verb[cur].id,'delete')
-                }else{
-                    this.axios('/verb','post',{data:this.verb[cur]})
+            for(const i in this.grouped_verbs){
+                for(const j in this.grouped_verbs[i])
+                {
+                    if(this.grouped_verbs[i][j].delete == true){
+                        this.axios('/verb/' + this.grouped_verbs[i][j].id,'delete')
+                    }else{
+                        this.axios('/verb','post',{data:this.grouped_verbs[i][j]})
+                    }
                 }
             }
         },
-        del(index){
-            if(this.verb[index].id == undefined)
+        del(verb, veb){
+            if(veb.id == undefined)
             {
-                delete this.verb[index];
+                verb.splice(verb.findIndex(item=>item.id == veb.id), 1);
             }
             else
             {
-                this.verb[index].delete = true;
+                veb.delete = true;
             }
         },  
-        add(){
+        add(verb, index){
             
-            this.verb[this.maxIndex+1] = {
+            verb.push({
                 name: '',
                 verb_parameters: [],
-            }
+                id_group: index
+            })
         }
     },
     created(){

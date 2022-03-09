@@ -40,7 +40,7 @@
                     <button 
                         class="btn btn-danger" 
                         type="button"
-                        @click="del(entity_g, index)"
+                        @click="del(entity_g, ent)"
                     >
                         <i class="fa fa-trash"/>
                     </button>
@@ -87,14 +87,14 @@ export default {
                 }
             }
         },
-        del(entity, index){
-            if(entity[index].id == undefined)
+        del(entity, ent){
+            if(ent.id == undefined)
             {
-                entity.splice(index, 1);
+                entity.splice(entity.findIndex(item => item.id = ent.id), 1);
             }
             else
             {
-                entity[index].delete = true;
+                ent.delete = true;
             }
         },  
         add(entity,enx){

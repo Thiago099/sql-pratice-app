@@ -3,6 +3,7 @@ export default{
         return {
             entity:{},
             grouped_entities:{},
+            grouped_verbs:{},
             verb:{},
             group:{},
             verb_parameters:[],
@@ -29,6 +30,7 @@ export default{
             await get_data('group',data)
 
             this.grouped_entities = this.groupBy(data.entity, item => item.id_group)
+            this.grouped_verbs = this.groupBy(data.verb, item => item.id_group)
             
 
             for(const key in data){
@@ -43,6 +45,13 @@ export default{
                 if(this.grouped_entities[i] == undefined)
                 {
                     this.grouped_entities[i] = []
+                }
+            }
+            for(const i in this.group)
+            {
+                if(this.grouped_verbs[i] == undefined)
+                {
+                    this.grouped_verbs[i] = []
                 }
             }
             await get_data('verb_parameters',data)
