@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-6 col-sm-12"  v-for="(veb, index) in this.filterObject(this.verb, item=>item.delete != true)" :key="veb">
+        <div class="col-md-6 col-sm-12"  v-for="(veb, index) in filteredVerbs" :key="veb">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">
@@ -37,6 +37,16 @@
                 
                 </div>
             </div>
+        </div>
+        <div>
+            <button 
+                class="btn btn-success" 
+                type="button"
+                @click="add()"
+                v-if="Object.keys(filteredVerbs).length == 0"
+            >
+                <i class="fa fa-plus"/>
+            </button>
         </div>
         <div>
             <a class="btn btn-info" style="float:right;margin-bottom:10px" @click="save">Save</a>
@@ -90,6 +100,9 @@ export default {
                 }
             }
             return max_index
+        },
+        filteredVerbs(){
+            return this.filterObject(this.verb, item=>item.delete != true)
         }
     }
 }

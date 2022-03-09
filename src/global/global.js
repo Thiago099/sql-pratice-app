@@ -2,7 +2,9 @@ export default{
     data() {
         return {
             entity:{},
+            grouped_entities:{},
             verb:{},
+            group:{},
             verb_parameters:[],
             verb_entities:[],
         }
@@ -22,24 +24,37 @@ export default{
                 }
                 })})
             }
-            const groupBy = (x, f) => x.reduce((a, b) => ((a[f(b)] ||= []).push(b), a), {});
-
             await get_data('verb',data)
             await get_data('entity',data)
+            await get_data('group',data)
+
+            this.grouped_entities = this.groupBy(data.entity, item => item.id_group)
+            
 
             for(const key in data){
                 for(const item in data[key])
                 {
-                this[key][data[key][item].id] = data[key][item]
+                    this[key][data[key][item].id] = data[key][item]
+                }
+            }
+
+            for(const i in this.group)
+            {
+                if(this.grouped_entities[i] == undefined)
+                {
+                    this.grouped_entities[i] = []
                 }
             }
             await get_data('verb_parameters',data)
-            data.verb_parameters = groupBy(data.verb_parameters, item => item.id_verb)
+            data.verb_parameters = this.groupBy(data.verb_parameters, item => item.id_verb)
             for(const verb in data.verb_parameters){
-                data.verb_parameters[verb] = groupBy(data.verb_parameters[verb], item => item.name)
+                data.verb_parameters[verb] = this.groupBy(data.verb_parameters[verb], item => item.name)
             }
             this.verb_parameters = data.verb_parameters
             await get_data('verb_entities',this)
+        },
+        groupBy (x, f) {
+            return x.reduce((a, b) => ((a[f(b)] ||= []).push(b), a), {})
         },
         capitlizeFirst(str) {
             if (!str) return;

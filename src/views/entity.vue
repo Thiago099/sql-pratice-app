@@ -1,49 +1,62 @@
 <template>
-    <div class="row">
-        <div class="col-md-3 col-sm-6"  v-for="(ent, index) in filterObject(entity, item=>item.delete != true)" :key="ent">
-            <div class="card">  
-                <div class="card-body">
-                    <div class="form-group">
-                        <label class="cyan">Name:</label>
-                        <input class="form-control" v-model="ent.name" :id="id"/>
+    <div class="row" >
+        <div v-for="(entity_g, enx) in grouped_entities" :key="entity_g" class="row">
+            <h2>{{ capitlizeFirst(group[enx].name) }}:</h2>
+            <div class="col-md-3 col-sm-6"  v-for="(ent, index) in entity_g.filter(item=>item.delete != true)" :key="ent">
+                <div class="card">  
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="cyan">Name:</label>
+                            <input class="form-control" v-model="ent.name" :id="id"/>
+                        </div>
+                        <multi-select 
+                            :data="ent.generalization" 
+                            @data="ent.generalization = $event.target.value"
+                            label="Generalzation"
+                            color="green"
+                            field="id_parent"
+                            :list_data="entity"
+                        >
+                        </multi-select>
+                        <multi-select 
+                            :data="ent.verb_entities" 
+                            @data="ent.verb_entities = $event.target.value"
+                            label="Verb"
+                            color="yellow"
+                            field="id_verb"
+                            :list_data="verb"
+                        >
+                        </multi-select>
                     </div>
-                    <multi-select 
-                        :data="ent.generalization" 
-                        @data="ent.generalization = $event.target.value"
-                        label="Generalzation"
-                        color="green"
-                        field="id_parent"
-                        :list_data="entity"
+                    <div class="card-footer">
+                    <button 
+                        class="btn btn-success" 
+                        type="button"
+                        @click="add(entity_g, enx)"
+                        v-if="index == entity_g.filter(item=>item.delete != true).length-1"
                     >
-                    </multi-select>
-                    <multi-select 
-                        :data="ent.verb_entities" 
-                        @data="ent.verb_entities = $event.target.value"
-                        label="Verb"
-                        color="yellow"
-                        field="id_verb"
-                        :list_data="verb"
+                        <i class="fa fa-plus"/>
+                    </button>
+                    <button 
+                        class="btn btn-danger" 
+                        type="button"
+                        @click="del(entity_g, index)"
                     >
-                    </multi-select>
+                        <i class="fa fa-trash"/>
+                    </button>
+                    
+                    </div>
                 </div>
-                <div class="card-footer">
-                <button 
-                    class="btn btn-success" 
-                    type="button"
-                    @click="add()"
-                    v-if="index == maxIndex"
-                >
-                    <i class="fa fa-plus"/>
-                </button>
-                <button 
-                    class="btn btn-danger" 
-                    type="button"
-                    @click="del(index)"
-                >
-                    <i class="fa fa-trash"/>
-                </button>
-                
-                </div>
+            </div>
+            <div>
+            <button 
+                class="btn btn-success" 
+                type="button"
+                @click="add(entity_g,enx)"
+                v-if="entity_g.filter(item=>item.delete != true).length == 0"
+            >
+                <i class="fa fa-plus"/>
+                    </button>
             </div>
         </div>
         <div>
@@ -63,31 +76,35 @@ export default {
     },
     methods:{
         save(){
-            for(const cur in this.entity){
-                if(this.entity[cur].delete == true){
-                    this.axios('/entity/'+this.entity[cur].id,'delete')
-                }else{
-                    this.axios('/entity','post',{data:this.entity[cur]})
+            for(const i in this.grouped_entities){
+                for(const j in this.grouped_entities[i])
+                {
+                    if(this.grouped_entities[i][j].delete == true){
+                        this.axios('/entity/' + this.grouped_entities[i][j].id,'delete')
+                    }else{
+                        this.axios('/entity','post',{data:this.grouped_entities[i][j]})
+                    }
                 }
             }
         },
-        del(index){
-            if(this.entity[index].id == undefined)
+        del(entity, index){
+            if(entity[index].id == undefined)
             {
-                delete this.entity[index];
+                entity.splice(index, 1);
             }
             else
             {
-                this.entity[index].delete = true;
+                entity[index].delete = true;
             }
         },  
-        add(){
+        add(entity,enx){
             
-            this.entity[this.maxIndex+1] = {
+            entity.push({
                 name: '',
                 generalization: [],
                 verb_entities: [],
-            }
+                id_group: enx,
+            })
         },
     },
     computed:{
@@ -101,6 +118,10 @@ export default {
                 }
             }
             return max_index
+        },
+        filteredEntities()
+        {
+            return this.filterObject(this.entity, item=>item.delete != true)
         }
     }
 }

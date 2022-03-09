@@ -28,6 +28,24 @@
           </div>
         </div>
       </div>
+      <div class="card-footer">
+      <button 
+          class="btn btn-success" 
+          type="button"
+          @click="add()"
+          v-if="index == maxIndex"
+      >
+          <i class="fa fa-plus"/>
+      </button>
+      <button 
+          class="btn btn-danger" 
+          type="button"
+          @click="del(index)"
+      >
+          <i class="fa fa-trash"/>
+      </button>
+      
+      </div>
     </div>
 </template>
 
