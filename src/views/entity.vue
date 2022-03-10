@@ -1,7 +1,7 @@
 <template>
     <div class="row" >
         <div v-for="(entity_g, enx) in grouped_entities" :key="entity_g" class="row">
-            <h2>{{ capitlizeFirst(group[enx].name) }}:</h2>
+            <h3>{{ capitlizeFirst(group[enx].name) }}:</h3>
             <div class="col-lg-3 col-md-6"  v-for="(ent, index) in entity_g.filter(item=>item.delete != true)" :key="ent">
                 <div class="card">  
                     <div class="card-body">
