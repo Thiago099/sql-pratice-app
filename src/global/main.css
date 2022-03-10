@@ -32,7 +32,7 @@ body{
 .card-footer{
     border-color: rgb(85, 85, 85);
 }
-.card-footer > .btn{
+.card-footer .btn{
     margin-left: 10px;
     float:right;
 }
@@ -54,4 +54,20 @@ label{
 
 .input-group{
     margin-bottom: 10px;
+}
+
+.btn-submit{
+    float:right;
+    margin-bottom:20px;
+    margin-top:20px;
+    border:1px solid rgb(85, 85, 85);
+    border-radius: 5px;
+    margin-left: 5px;
+    color:white;
+    background-color: rgb(36, 36, 36);
+}
+.btn-submit:hover{
+    background-color: rgb(36, 36, 36);
+    color:white;
+    border:1px solid rgb(85, 85, 85);
 }

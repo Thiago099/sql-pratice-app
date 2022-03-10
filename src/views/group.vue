@@ -1,7 +1,10 @@
 
 <template>
-<div class="row">
+<div>
     <div class="row">
+        <div>
+            <a class="btn btn-info btn-submit" style="margin-top:-50px" @click="save">Save</a>
+        </div>
         <div class="col-lg-3 col-md-6" v-for="(group, index) in group_list" :key="group">
             <div class="card">
                 <div class="card-body">
@@ -28,7 +31,18 @@
             </div>
         </div>
         <div>
-            <a class="btn btn-info" style="float:right;margin-bottom:10px" @click="save">Save</a>
+            <button 
+                class="btn btn-success" 
+                type="button"
+                @click="add()"
+                style="margin-top:10px"
+                v-if="group_list.length == 0"
+            >
+                <i class="fa fa-plus"/>
+            </button>
+        </div>
+        <div>
+            <a class="btn btn-info btn-submit" @click="save">Save</a>
         </div>  
     </div>
 </div>
@@ -49,12 +63,19 @@ export default {
         save(){
             for(const i in this.groups)
             {
-                if(this.groups[i].delete == true){
-                    this.axios('/group/' + this.groups[i].id,'delete')
-                }else{
+                if(this.groups[i].delete == true)
+                {
+                    if(this.groups[i].id != null)
+                    {
+                        this.axios('/group/' + this.groups[i].id,'delete')
+                    }
+                }
+                else
+                {
                     this.axios('/group','post',{data:this.groups[i]})
                 }
             }
+            this.update()
         },
         add(){
             this.groups.push({
@@ -62,11 +83,7 @@ export default {
             });
         },
         del(index, group){
-            if(this.groups.id != undefined){
-                this.groups.splice(index, 1);
-            }else{
-                group.delete = true
-            }
+            group.delete = true
         }
     }
 }

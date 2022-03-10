@@ -37,5 +37,4 @@ export default {
     color:cyan;
     border-bottom: 2px solid cyan;
 }
-
 </style>

@@ -14,7 +14,7 @@
                 <button 
                     class="btn btn-danger" 
                     type="button"
-                    @click="removeParameter(veb_parameters, index)"
+                    @click="removeParameter(veb_parameters)"
                 >
                     <i class="fa fa-trash"/>
                 </button>
@@ -93,15 +93,8 @@ export default {
             }
             this.$emit('data', this.form_data)
         },
-        removeParameter(data, index){
-            if(data.id != 0 && data.id != null)
-            {
-                data.delete = true
-            }
-            else
-            {
-                this.form_data.splice(index, 1)
-            }
+        removeParameter(data){
+            data.delete = true
             this.$emit('data', this.form_data)
         },
     },

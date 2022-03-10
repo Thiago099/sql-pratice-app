@@ -6,17 +6,18 @@ export default{
             grouped_verbs:{},
             verb:{},
             group:{},
-            verb_parameters:[],
-            verb_entities:[],
+            verb_parameter:[],
+            verb_entity:[],
             groups:[],
+            action:[],
         }
         },
     methods:{
         async update(){
             this.entity={};
             this.verb={};
-            this.verb_parameters=[];
-            this.verb_entities=[];
+            this.verb_parameter=[];
+            this.verb_entity=[];
             const data = {}
             const  get_data = async (name, target) => {
                 target[name] = await new Promise((resolve)=>{
@@ -29,6 +30,7 @@ export default{
             await get_data('verb',data)
             await get_data('entity',data)
             await get_data('group',data)
+
 
             this.grouped_entities = this.groupBy(data.entity, item => item.id_group)
             this.grouped_verbs = this.groupBy(data.verb, item => item.id_group)
@@ -56,13 +58,14 @@ export default{
                 }
             }
             this.groups = data.group
-            await get_data('verb_parameters',data)
-            data.verb_parameters = this.groupBy(data.verb_parameters, item => item.id_verb)
-            for(const verb in data.verb_parameters){
-                data.verb_parameters[verb] = this.groupBy(data.verb_parameters[verb], item => item.name)
+            await get_data('verb_parameter',data)
+            data.verb_parameter = this.groupBy(data.verb_parameter, item => item.id_verb)
+            for(const verb in data.verb_parameter){
+                data.verb_parameter[verb] = this.groupBy(data.verb_parameter[verb], item => item.name)
             }
-            this.verb_parameters = data.verb_parameters
-            await get_data('verb_entities',this)
+            this.verb_parameter = data.verb_parameter
+            await get_data('verb_entity',this)
+            await get_data('action',this)
         },
         groupBy (x, f) {
             return x.reduce((a, b) => ((a[f(b)] ||= []).push(b), a), {})

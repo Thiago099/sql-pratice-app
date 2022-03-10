@@ -1,6 +1,9 @@
 <template>
     <div class="row" >
-        <div v-for="(entity_g, enx) in grouped_entities" :key="entity_g" class="row">
+        <div>
+            <a class="btn btn-info btn-submit" style="margin-top:-50px" @click="save">Save</a>
+        </div>
+        <div v-for="(entity_g, enx) in grouped_entities" :key="entity_g" class="row" style="margin-top:30px">
             <h3>{{ capitlizeFirst(group[enx].name) }}:</h3>
             <div class="col-lg-3 col-md-6"  v-for="(ent, index) in entity_g.filter(item=>item.delete != true)" :key="ent">
                 <div class="card">  
@@ -19,8 +22,8 @@
                         >
                         </multi-select>
                         <multi-select 
-                            :data="ent.verb_entities" 
-                            @data="ent.verb_entities = $event.target.value"
+                            :data="ent.verb_entity" 
+                            @data="ent.verb_entity = $event.target.value"
                             label="Verb"
                             color="yellow"
                             field="id_verb"
@@ -29,6 +32,19 @@
                         </multi-select>
                     </div>
                     <div class="card-footer">
+                        <select 
+                            class="form-select" 
+                            style="width:50%;display:inline"
+                            :value="ent.id_group"
+                            @change="changeGroup(ent, $event.target.value)"
+                        >
+                            <option 
+                            v-for="group in groups" 
+                            :key="group" 
+                            :value="group.id"
+                            
+                            >{{ group.name }}</option>
+                        </select>
                     <button 
                         class="btn btn-success" 
                         type="button"
@@ -52,6 +68,7 @@
             <button 
                 class="btn btn-success" 
                 type="button"
+                style="margin-top:10px"
                 @click="add(entity_g,enx)"
                 v-if="entity_g.filter(item=>item.delete != true).length == 0"
             >
@@ -60,7 +77,7 @@
             </div>
         </div>
         <div>
-            <a class="btn btn-info" style="float:right;margin-bottom:10px" @click="save">Save</a>
+            <a class="btn btn-info btn-submit" @click="save">Save</a>
         </div>
     </div>
 </template>
@@ -79,32 +96,37 @@ export default {
             for(const i in this.grouped_entities){
                 for(const j in this.grouped_entities[i])
                 {
-                    if(this.grouped_entities[i][j].delete == true){
-                        this.axios('/entity/' + this.grouped_entities[i][j].id,'delete')
-                    }else{
+                    if(this.grouped_entities[i][j].delete == true)
+                    {
+                        if(this.grouped_entities[i][j].id != null)
+                        {
+                            this.axios('/entity/' + this.grouped_entities[i][j].id,'delete')
+                        }
+                    }
+                    else
+                    {
                         this.axios('/entity','post',{data:this.grouped_entities[i][j]})
                     }
                 }
             }
+            this.update()
         },
         del(entity, ent){
-            if(ent.id == undefined)
-            {
-                entity.splice(entity.findIndex(item => item.id = ent.id), 1);
-            }
-            else
-            {
-                ent.delete = true;
-            }
+            ent.delete = true;
         },  
         add(entity,enx){
             
             entity.push({
                 name: '',
                 generalization: [],
-                verb_entities: [],
+                verb_entity: [],
                 id_group: enx,
             })
+        },
+        changeGroup(ent, id_group){
+            this.grouped_entities[ent.id_group].splice(this.grouped_entities[ent.id_group].findIndex(item => item == ent), 1);
+            this.grouped_entities[id_group].push(ent)
+            ent.id_group = id_group;
         },
     },
     computed:{
@@ -122,7 +144,8 @@ export default {
         filteredEntities()
         {
             return this.filterObject(this.entity, item=>item.delete != true)
-        }
+        },
+        
     }
 }
 </script>
