@@ -97,7 +97,7 @@ export default {
         this.update()
     },
     methods:{
-        save(){
+        async save(){
             for(const i in this.grouped_entities){
                 for(const j in this.grouped_entities[i])
                 {
@@ -105,12 +105,21 @@ export default {
                     {
                         if(this.grouped_entities[i][j].id != null)
                         {
-                            this.axios('/entity/' + this.grouped_entities[i][j].id,'delete')
+                            await new Promise
+                            (
+                                resolve => this.axios(
+                                    '/entity/' + this.grouped_entities[i][j].id,
+                                    'delete',
+                                    {
+                                        callback:() => resolve()
+                                    }
+                                )
+                            )
                         }
                     }
                     else
                     {
-                        this.axios('/entity','post',{data:this.grouped_entities[i][j]})
+                        await new Promise(resolve=>this.axios('/entity','post',{data:this.grouped_entities[i][j],callback:()=>(resolve())}))
                     }
                 }
             }

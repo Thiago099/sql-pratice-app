@@ -108,12 +108,30 @@ export default {
           {
               if(this.action[i].id != null)
               {
-                this.axios('/action/' + this.action[i].id, 'delete')
+                await new Promise(
+                  resolve => this.axios(
+                    '/action/' + this.action[i].id,
+                    'delete',
+                    {
+                      callback:()=>resolve()
+                    }
+                  )
+                )
               }
           }
           else
           {
-              this.axios('/action/', 'post', {data:this.action[i]})
+              await new Promise(
+                resolve => 
+                this.axios(
+                  '/action/',
+                  'post', 
+                  {
+                    data:this.action[i],
+                    callback:()=>(resolve())
+                  }
+                )
+              )
           }
       }
       this.update()

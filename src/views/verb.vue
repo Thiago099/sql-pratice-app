@@ -93,7 +93,7 @@ export default {
         MultiSelect,
     },
     methods:{
-        save(){
+        async save(){
             for(const i in this.grouped_verbs){
                 for(const j in this.grouped_verbs[i])
                 {
@@ -101,12 +101,29 @@ export default {
                     {
                         if(this.grouped_verbs[i][j].id != null)
                         {
-                            this.axios('/verb/' + this.grouped_verbs[i][j].id,'delete')
+                             await new Promise(
+                                 resolve => this.axios(
+                                     '/verb/' + this.grouped_verbs[i][j].id,
+                                     'delete',
+                                    {
+                                         callback: () => resolve()
+                                    }
+                                )
+                            );
                         }
                     }
                     else
                     {
-                        this.axios('/verb','post',{data:this.grouped_verbs[i][j]})
+                        await new Promise(
+                            resolve => this.axios(
+                                '/verb',
+                                'post',
+                                {
+                                    data:this.grouped_verbs[i][j],
+                                    callback: () => resolve()
+                                }
+                            )
+                        )
                     }
                 }
             }

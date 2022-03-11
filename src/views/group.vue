@@ -60,19 +60,36 @@ export default {
       }
     },
     methods:{
-        save(){
+        async save(){
             for(const i in this.groups)
             {
                 if(this.groups[i].delete == true)
                 {
                     if(this.groups[i].id != null)
                     {
-                        this.axios('/group/' + this.groups[i].id,'delete')
+                        await new Promise(
+                            resolve => this.axios(
+                                '/group/' + this.groups[i].id,
+                                'delete',
+                                {
+                                    callback: () => resolve()
+                                }
+                            )
+                        )
                     }
                 }
                 else
                 {
-                    this.axios('/group','post',{data:this.groups[i]})
+                    await new Promise(
+                        resolve => this.axios(
+                            '/group',
+                            'post',
+                            {
+                                data:this.groups[i],
+                                callback: () => resolve()
+                            }
+                        )
+                    )
                 }
             }
             this.update()
