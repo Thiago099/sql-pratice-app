@@ -3,14 +3,17 @@
         <label :class="color">{{ label }}:</label>
         <div class="form-group" v-for="(veb_parameters, index) in filteredData" :key="veb_parameters">
             <div class="input-group">
-                <input type="text" class="form-control" v-if="show_text" v-model="veb_parameters.name">
-                <select class="form-select" v-model="veb_parameters[field]">
-                    <option 
-                        v-for="ent in list_data" :key="ent.id" :value="ent.id"
-                        >
-                    {{ ent.name }}
-                    </option>
-                </select>
+                <input type="text" class="form-control" :class="color" v-if="show_text" v-model="veb_parameters.name"/>
+                <group-select
+                :value="veb_parameters[field]"
+                @input="(value)=> veb_parameters[field] = value"
+                :data="list_data"
+                field="id"
+                :name_source="name_source"
+                :group="group"
+                :color="color"
+                >
+                </group-select>
                 <button 
                     class="btn btn-danger" 
                     type="button"
@@ -44,35 +47,22 @@
     </div>
 </template>
 <script>
+import groupSelect from './groupselect.vue'
 export default {
-    name: 'MultiSelect',
-    props: {
-        data: {
-            type: Array,
-            required: true,
-        },
-        label: {
-            type: String,
-            required: true,
-        },
-        color:{
-            type: String,
-            required: true,
-        },
-        field: {
-            type: String,
-            required: true,
-        },
-        list_data:{
-            type: Array,
-            required: true,
-        },
-        show_text: {
-            type: Boolean,
-            required: false,
-            default: false,
-        }
+    components: {
+        groupSelect
     },
+    name: 'MultiSelect',
+    props: [
+        'data',
+        'label',
+        'color',
+        'field',
+        'list_data',
+        'show_text',
+        'group',
+        'name_source',
+    ],
     data(){
         return{
             form_data: this.data

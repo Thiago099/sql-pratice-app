@@ -34,7 +34,7 @@ export default {
     background-color: rgb(36, 36, 36);
 }
 .router-link-exact-active{
-    color:cyan;
-    border-bottom: 2px solid cyan;
+    color:rgb(0, 255, 128);
+    border-bottom: 2px solid rgb(0, 255, 128);
 }
 </style>

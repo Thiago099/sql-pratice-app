@@ -8,8 +8,8 @@
         <div class="col-lg-3 col-md-6" v-for="(group, index) in group_list" :key="group">
             <div class="card">
                 <div class="card-body">
-                    <label>Name:</label>
-                    <input type="text" class="form-control" v-model="group.name">
+                    <label class="red">Name:</label>
+                    <input type="text" class="form-control red" v-model="group.name">
                 </div>
                 <div class="card-footer">
                 <button 

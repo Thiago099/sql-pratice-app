@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <div class="group"></div>
     <div>
         <a class="btn btn-info btn-submit" style="margin-top:-50px" @click="save">Save</a>
     </div>
@@ -8,60 +9,46 @@
         <div class="row">
           <div class="form-group col-3">
             <label for="entity" class="cyan">Entity:</label>
-            <select 
-              name="" 
-              id="entity" 
-              class="form-select" 
-              v-model="act.id_entity"
-              @change="act.id_verb=null"
-              >
-              <option 
-                v-for="(e,id) in entity" 
-                :key="e" 
-                :value="id"
-              >
-                {{ e.name }}
-              </option>
-            </select>
+            <group-select
+              color="cyan"
+              :value="act.id_entity"
+              @input="(value)=> act.id_entity = value"
+              :data="entities"
+              field="id"
+              :name_source="entity"
+              :group="group"
+            >
+            </group-select>
           </div>
           <div class="form-group col-3">
             <label for="verb" class="yellow">Verb:</label>
-            <select 
-              name="" 
-              id="verb" 
-              class="form-select" 
-              v-model="act.id_verb"
+            <group-select
+              color="yellow"
+              :value="act.id_verb"
+              @input="(value)=> act.id_verb = value"
+              :data="verb_entity.filter(item => item.id_entity == act.id_entity)"
+              field="id_verb"
+              :name_source="verb"
               @change="updateParamters(act)"
-
-              >
-              <option 
-                v-for="({id_verb}) in verb_entity.filter(item => item.id_entity == act.id_entity)" 
-                :key="id_verb" 
-                :value="id_verb"
-              >
-                {{ verb[id_verb].name }}
-              </option>
-            </select>
+              :group="group"
+            >
+            </group-select>
           </div>
           <div 
             class="form-group col-3" v-for="(parameter, name) in verb_parameter[act.id_verb]" 
             :key="parameter"
           >
             <label for="verb" class="magenta">{{ capitlizeFirst(name) }}:</label>
-            <select 
-              name="" 
-              id="verb" 
-              class="form-select" 
-              v-model="(act.action_parameter.filter(item => item.id_verb_parameter == parameter[0].id)[0] || {id_entity:null}).id_entity"
+            <group-select
+              color="magenta"
+              :value="(act.action_parameter.filter(item => item.id_verb_parameter == parameter[0].id)[0] || {id_entity:null}).id_entity"
+              @input="(value)=>(act.action_parameter.filter(item => item.id_verb_parameter == parameter[0].id)[0] || {id_entity:null}).id_entity = value"
+              :data="parameter"
+              field="id_entity"
+              :name_source="entity"
+              :group="group"
             >
-              <option 
-                v-for="({id_entity}) in parameter" 
-                :key="id_entity" 
-                :value="id_entity"
-              >
-                {{ entity[id_entity].name }}
-              </option>
-            </select>
+            </group-select>
           </div>
         </div>
       </div>
@@ -104,7 +91,11 @@
 </template>
 
 <script>
+import GroupSelect from '../components/groupselect.vue'
 export default {
+  components:{
+    GroupSelect
+  },
   name: 'ActionRegister',
   created(){
       this.update()
@@ -142,10 +133,12 @@ export default {
     },
     updateParamters(act)
     {
-      act.action_parameter = []
+      for(const i in act.action_parameter)
+      {
+        act.action_parameter[i].delete = true;
+      }
       for(const i in this.verb_parameter[act.id_verb])
       {
-        console.log( this.verb_parameter[act.id_verb][i][0].id)
         act.action_parameter.push({
           id_verb_parameter: this.verb_parameter[act.id_verb][i][0].id,
           id_entity: null,

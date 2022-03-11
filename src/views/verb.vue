@@ -4,13 +4,13 @@
             <a class="btn btn-info btn-submit" style="margin-top:-50px" @click="save">Save</a>
         </div>
         <div v-for="(verb_g, vex) in grouped_verbs" :key="verb_g" class="row" style="margin-top:30px">
-        <h3>{{ capitlizeFirst(group[vex].name) }}:</h3>
+        <h3 class="red">{{ capitlizeFirst(group[vex].name) }}:</h3>
         <div class="col-lg-6 col-md-12"  v-for="(veb, index) in verb_g.filter(item=>item.delete != true)" :key="veb">
             <div class="card">  
                 <div class="card-body">
                     <div class="form-group">
                         <label class="yellow">Name:</label>
-                        <input class="form-control" v-model="veb.name" :id="id"/>
+                        <input class="form-control yellow" v-model="veb.name" :id="id"/>
                     </div>
                     <multi-select 
                         :data="veb.verb_parameter" 
@@ -18,8 +18,10 @@
                         label="Parameter"
                         color="magenta"
                         field="id_entity"
-                        :list_data="entity"
+                        :list_data="entities"
                         :show_text="true"
+                        :group="group"	
+                        :name_source="entity"
                     >
                     </multi-select>
                     <multi-select 
@@ -28,13 +30,15 @@
                         label="Entity"
                         color="cyan"
                         field="id_entity"
-                        :list_data="entity"
+                        :list_data="entities"
+                        :group="group"	
+                        :name_source="entity"
                     >
                     </multi-select>
                 </div>
                 <div class="card-footer">
                     <select 
-                        class="form-select" 
+                        class="form-select red" 
                         style="width:50%;display:inline"
                         :value="veb.id_group"
                         @change="changeGroup(veb, $event.target.value)"

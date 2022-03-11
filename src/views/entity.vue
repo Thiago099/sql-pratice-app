@@ -4,13 +4,13 @@
             <a class="btn btn-info btn-submit" style="margin-top:-50px" @click="save">Save</a>
         </div>
         <div v-for="(entity_g, enx) in grouped_entities" :key="entity_g" class="row" style="margin-top:30px">
-            <h3>{{ capitlizeFirst(group[enx].name) }}:</h3>
+            <h3 class="red">{{ capitlizeFirst(group[enx].name) }}:</h3>
             <div class="col-lg-3 col-md-6"  v-for="(ent, index) in entity_g.filter(item=>item.delete != true)" :key="ent">
                 <div class="card">  
                     <div class="card-body">
                         <div class="form-group">
                             <label class="cyan">Name:</label>
-                            <input class="form-control" v-model="ent.name" :id="id"/>
+                            <input class="form-control cyan" v-model="ent.name" :id="id"/>
                         </div>
                         <multi-select 
                             :data="ent.generalization" 
@@ -18,22 +18,27 @@
                             label="Generalzation"
                             color="green"
                             field="id_parent"
-                            :list_data="entity"
+                            :list_data="entities"
+                            :group="group"	
+                            :name_source="entity"
                         >
                         </multi-select>
+
                         <multi-select 
                             :data="ent.verb_entity" 
                             @data="ent.verb_entity = $event.target.value"
                             label="Verb"
                             color="yellow"
                             field="id_verb"
-                            :list_data="verb"
+                            :list_data="verbs"
+                            :group="group"	
+                            :name_source="verb"
                         >
                         </multi-select>
                     </div>
                     <div class="card-footer">
                         <select 
-                            class="form-select" 
+                            class="form-select red" 
                             style="width:50%;display:inline"
                             :value="ent.id_group"
                             @change="changeGroup(ent, $event.target.value)"

@@ -39,6 +39,9 @@ body{
 label{
     margin-top: 10px;    
 }
+.white{
+    color:white;
+}
 .green{
     color: #0f0;
 }
@@ -51,7 +54,12 @@ label{
 .cyan{
     color: #0ff;
 }
-
+.red{
+    color: #f00;
+}
+.blue{
+    color: #88f;
+}
 .input-group{
     margin-bottom: 10px;
 }

@@ -10,6 +10,8 @@ export default{
             verb_entity:[],
             groups:[],
             action:[],
+            entities:[],
+            verbs:[],
         }
         },
     methods:{
@@ -66,6 +68,9 @@ export default{
             this.verb_parameter = data.verb_parameter
             await get_data('verb_entity',this)
             await get_data('action',this)
+
+            this.entities = data.entity
+            this.verbs = data.verb
         },
         groupBy (x, f) {
             return x.reduce((a, b) => ((a[f(b)] ||= []).push(b), a), {})
