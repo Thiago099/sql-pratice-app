@@ -29,7 +29,7 @@
               :data="verb_entity.filter(item => item.id_entity == act.id_entity)"
               field="id_verb"
               :name_source="verb"
-              @change="updateParamters(act)"
+              @change="updateParameters(act)"
               :group="group"
             >
             </group-select>
@@ -149,7 +149,7 @@ export default {
     capitlizeFirst(string){
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
-    updateParamters(act)
+    updateParameters(act)
     {
       for(const i in act.action_parameter)
       {

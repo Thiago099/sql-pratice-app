@@ -9,14 +9,21 @@
 </template>
 <script>
 import router from './global/router'
+
+
 export default {
     name: 'App',
     data(){
         return{
-            routes:router.options.routes
+            routes:router.options.routes,
         }
     },
-   
+    computed:{
+        current_color(){
+            return this.routes.find(route => route.path == this.$route.path).color
+        }
+    },
+    
 }
 </script>
 
@@ -34,7 +41,7 @@ export default {
     background-color: rgb(36, 36, 36);
 }
 .router-link-exact-active{
-    color:rgb(0, 255, 128);
-    border-bottom: 2px solid rgb(0, 255, 128);
-}
+    color:v-bind(current_color);
+    border-bottom: 2px solid v-bind(current_color);
+    }
 </style>

@@ -3,21 +3,25 @@ const routes = [
   {
     path: '/',
     name: 'Action',
+    color:'orange',
     component:  import('../views/action.vue')
   },
   {
     path: '/entity',
     name: 'Entity',
+    color: 'cyan',
     component: () => import(/* webpackChunkName: "entity" */ '../views/entity.vue')
   },
   {
     path: '/verb',
     name: 'Verb',
+    color: 'yellow',
     component: () => import(/* webpackChunkName: "entity" */ '../views/verb.vue')
   },
   {
     path: '/group',
     name: 'Group',
+    color: 'red',
     component: () => import(/* webpackChunkName: "entity" */ '../views/group.vue')
   }
 ]
