@@ -101,7 +101,7 @@ export default {
       this.update()
   },
   methods:{
-    save(){
+    async save(){
       for(const i in this.action)
       {
           if(this.action[i].delete == true)
