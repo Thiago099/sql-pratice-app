@@ -4,7 +4,9 @@
     <div>
         <a class="btn btn-info btn-submit" style="margin-top:-50px" @click="save">Save</a>
     </div>
-    <div class="card" v-for="(act,idx) in action_list" :key="act">  
+    <div v-for="(action_g, enx) in grouped_actions" :key="action_g" class="row" style="margin-top:30px">
+            <h3 class="blue">{{ capitlizeFirst(process[enx].name) }}:</h3>
+    <div class="card" v-for="(act,idx) in action_g.filter(item => item.delete != true)" :key="act">  
       <div class="card-body">
         <div class="row">
           <div class="form-group col-3">
@@ -57,8 +59,8 @@
           <button 
               class="btn btn-success" 
               type="button"
-              @click="add()"
-              v-if="idx == action_list.length-1"
+              @click="add(action_g,enx)"
+              v-if="idx == action_g.filter(item => item.delete != true).length-1"
           >
               <i class="fa fa-plus"/>
           </button>
@@ -76,9 +78,9 @@
       <button 
           class="btn btn-success" 
           type="button"
-          @click="add()"
+          @click="add(action_g,enx)"
           style="margin-top:10px"
-          v-if="action_list.length == 0"
+          v-if="action_g.filter(item => item.delete != true).length == 0"
       >
           <i class="fa fa-plus"/>
       </button>
@@ -87,6 +89,7 @@
     <div>
         <a class="btn btn-info btn-submit" @click="save">Save</a>
     </div>
+  </div>
   </div>
 </template>
 
@@ -102,45 +105,49 @@ export default {
   },
   methods:{
     async save(){
-      for(const i in this.action)
+      for(const j in this.grouped_actions)
       {
-          if(this.action[i].delete == true)
-          {
-              if(this.action[i].id != null)
-              {
+        for(const i in this.grouped_actions[j])
+        {
+            if(this.grouped_actions[j][i].delete == true)
+            {
+                if(this.grouped_actions[j][i].id != null)
+                {
+                  await new Promise(
+                    resolve => this.axios(
+                      '/action/' + this.grouped_actions[j][i].id,
+                      'delete',
+                      {
+                        callback:()=>resolve()
+                      }
+                    )
+                  )
+                }
+            }
+            else
+            {
                 await new Promise(
-                  resolve => this.axios(
-                    '/action/' + this.action[i].id,
-                    'delete',
+                  resolve => 
+                  this.axios(
+                    '/action/',
+                    'post', 
                     {
-                      callback:()=>resolve()
+                      data:this.grouped_actions[j][i],
+                      callback:()=>(resolve())
                     }
                   )
                 )
-              }
-          }
-          else
-          {
-              await new Promise(
-                resolve => 
-                this.axios(
-                  '/action/',
-                  'post', 
-                  {
-                    data:this.action[i],
-                    callback:()=>(resolve())
-                  }
-                )
-              )
-          }
+            }
+        }
       }
       this.update()
     },
-    add(){
-      this.action.push({
+    add(action_g, enx){
+      action_g.push({
         id_entity: null,
         id_verb: null,
         action_parameter: [],
+        id_process:enx
       })
     },
     del(action){
@@ -164,11 +171,6 @@ export default {
       }
     }
   },
-  computed:{
-    action_list(){
-      return this.action.filter(item => item.delete != true)
-    }
-  }
 }
 </script>
 

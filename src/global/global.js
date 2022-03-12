@@ -4,11 +4,14 @@ export default{
             entity:{},
             grouped_entities:{},
             grouped_verbs:{},
+            grouped_actions:{},
             verb:{},
             group:{},
+            process:{},
             verb_parameter:[],
             verb_entity:[],
             groups:[],
+            processs:[],
             action:[],
             entities:[],
             verbs:[],
@@ -32,6 +35,8 @@ export default{
             await get_data('verb',data)
             await get_data('entity',data)
             await get_data('group',data)
+            await get_data('process',data)
+
 
 
             this.grouped_entities = this.groupBy(data.entity, item => item.id_group)
@@ -59,7 +64,12 @@ export default{
                     this.grouped_verbs[i] = []
                 }
             }
+            
+           
             this.groups = data.group
+            this.processs = data.process
+
+
             await get_data('verb_parameter',data)
             data.verb_parameter = this.groupBy(data.verb_parameter, item => item.id_verb)
             for(const verb in data.verb_parameter){
@@ -68,6 +78,16 @@ export default{
             this.verb_parameter = data.verb_parameter
             await get_data('verb_entity',this)
             await get_data('action',this)
+
+            this.grouped_actions = this.groupBy(this.action, item => item.id_process)
+
+            for(const i in this.process)
+            {
+                if(this.grouped_actions[i] == undefined)
+                {
+                    this.grouped_actions[i] = []
+                }
+            }
 
             this.entities = data.entity
             this.verbs = data.verb

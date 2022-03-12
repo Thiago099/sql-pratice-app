@@ -1,7 +1,7 @@
 <template>
     <simple-crud
-        color = "red"
-        name = "group"
+        color = "blue"
+        name = "process"
     >
     </simple-crud>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import simpleCrud from '../components/simplecrud.vue'
 export default {
-    name: 'GroupRegister',
+    name: 'ProcessRegister',
     components:{
         simpleCrud
     },

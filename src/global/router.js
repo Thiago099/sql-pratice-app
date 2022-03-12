@@ -23,6 +23,12 @@ const routes = [
     name: 'Group',
     color: 'red',
     component: () => import(/* webpackChunkName: "entity" */ '../views/group.vue')
+  },
+  {
+    path: '/process',
+    name: 'Process',
+    color: 'rgb(0, 128, 255)',
+    component: () => import(/* webpackChunkName: "entity" */ '../views/process.vue')
   }
 ]
 const router = createRouter({

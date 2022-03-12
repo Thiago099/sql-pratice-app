@@ -58,7 +58,7 @@ label{
     color: #f00;
 }
 .blue{
-    color: #88f;
+    color: rgb(0, 128, 255);
 }
 .input-group{
     margin-bottom: 10px;
