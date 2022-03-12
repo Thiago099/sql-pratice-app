@@ -86,7 +86,7 @@
     </div>
 </template>
 <script>
-import MultiSelect from '../components/multiselect.vue';
+import MultiSelect from '../components/multi-select.vue';
 export default {
     name: 'VerbRegister',
     components: {

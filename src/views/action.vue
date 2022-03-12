@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import GroupSelect from '../components/groupselect.vue'
+import GroupSelect from '../components/group-select.vue'
 export default {
   components:{
     GroupSelect

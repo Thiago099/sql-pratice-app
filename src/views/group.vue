@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import simpleCrud from '../components/simplecrud.vue'
+import simpleCrud from '../components/simple-crud.vue'
 export default {
     name: 'GroupRegister',
     components:{
