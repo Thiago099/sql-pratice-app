@@ -57,6 +57,9 @@ label{
 .red{
     color: #f00;
 }
+.green-blue{
+    color: #00ff80;
+}
 .blue{
     color: rgb(0, 128, 255);
 }

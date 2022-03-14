@@ -5,6 +5,7 @@ export default{
             grouped_entities:{},
             grouped_verbs:{},
             grouped_actions:{},
+            grouped_process_entities:{},
             verb:{},
             group:{},
             process:{},
@@ -15,6 +16,7 @@ export default{
             action:[],
             entities:[],
             verbs:[],
+            instances:[],
         }
         },
     methods:{
@@ -78,8 +80,20 @@ export default{
             this.verb_parameter = data.verb_parameter
             await get_data('verb_entity',this)
             await get_data('action',this)
+            this.instances = data.instance
 
             this.grouped_actions = this.groupBy(this.action, item => item.id_process)
+
+
+            this.grouped_process_entities = this.groupBy(data.entity, item => item.id_process)
+            delete  this.grouped_process_entities[null]
+            for(const i in this.process)
+            {
+                if(this.grouped_process_entities[i] == undefined)
+                {
+                    this.grouped_process_entities[i] = []
+                }
+            }
 
             for(const i in this.process)
             {
@@ -90,6 +104,7 @@ export default{
             }
 
             this.entities = data.entity
+            this.instances = data.entity.filter(item => item.instance == 1)
             this.verbs = data.verb
         },
         groupBy (x, f) {

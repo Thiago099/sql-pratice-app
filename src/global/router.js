@@ -7,6 +7,12 @@ const routes = [
     component:  import('../views/action.vue')
   },
   {
+    path: '/instance',
+    name: 'Instance',
+    color: 'rgb(0,255,128)',
+    component: () => import(/* webpackChunkName: "entity" */ '../views/instance.vue')
+  },
+  {
     path: '/entity',
     name: 'Entity',
     color: 'cyan',
