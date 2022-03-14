@@ -17,7 +17,7 @@
             <option disabled style="background: red; font-size: 0.1px;"></option>
             <option disabled style="font-size: 0.25em;"></option>
             <option 
-            :class="color"
+            :class="name_source[item[field]].instance == 1 ? 'green-blue' : color"
             :key="item[field]" 
             :value="item[field]"
             v-for="(item) in data"

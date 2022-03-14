@@ -15,7 +15,7 @@
               color="cyan"
               :value="act.id_entity"
               @input="(value)=> act.id_entity = value"
-              :data="entities.filter(item => item.instance == 0 || item.id_process == process[enx].id)"
+              :data="all_entities.filter(item => item.instance == 0 || item.id_process == process[enx].id)"
               field="id"
               :name_source="entity"
               :group="group"

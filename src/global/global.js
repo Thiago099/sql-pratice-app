@@ -17,6 +17,7 @@ export default{
             entities:[],
             verbs:[],
             instances:[],
+            all_entities:[],
         }
         },
     methods:{
@@ -38,6 +39,7 @@ export default{
             await get_data('entity',data)
             await get_data('group',data)
             await get_data('process',data)
+
 
 
 
@@ -85,7 +87,7 @@ export default{
             this.grouped_actions = this.groupBy(this.action, item => item.id_process)
 
 
-            this.grouped_process_entities = this.groupBy(data.entity, item => item.id_process)
+            this.grouped_process_entities = this.groupBy(JSON.parse(JSON.stringify(data.entity)), item => item.id_process)
             delete  this.grouped_process_entities[null]
             for(const i in this.process)
             {
@@ -103,9 +105,18 @@ export default{
                 }
             }
 
-            this.entities = data.entity
+            this.entities = data.entity.filter(item => item.instance == 0)
+            this.all_entities = data.entity
             this.instances = data.entity.filter(item => item.instance == 1)
             this.verbs = data.verb
+            this.instances.map(item => 
+                {
+                    if(item.instance == 1) 
+                    {
+                        item.name = `${this.entity[item.generalization[0].id_parent].name} ${item.name}`
+                    }
+                }
+            )
         },
         groupBy (x, f) {
             return x.reduce((a, b) => ((a[f(b)] ||= []).push(b), a), {})
