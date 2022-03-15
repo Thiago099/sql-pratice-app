@@ -43,7 +43,7 @@ export default{
 
 
 
-            this.grouped_entities = this.groupBy(data.entity, item => item.id_group)
+            this.grouped_entities = this.groupBy(data.entity.filter(item => item.instance == 0), item => item.id_group)
             this.grouped_verbs = this.groupBy(data.verb, item => item.id_group)
             
 

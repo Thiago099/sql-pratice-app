@@ -18,7 +18,11 @@
                             <group-select
                             color="cyan"
                             :value="group_d.generalization[0].id_parent"
-                            @input="(value)=> {group_d.generalization[0].id_parent = value;group_d.id_group = entity[value].id_group}"
+                            @input="(value)=> 
+                            {
+                                group_d.generalization[0].id_parent = value;
+                                group_d.id_group = entity[value].id_group
+                            }"
                             :data="entities"
                             field="id"
                             :name_source="entity"
